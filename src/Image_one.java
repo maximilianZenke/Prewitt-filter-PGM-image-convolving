@@ -44,7 +44,7 @@ import java.util.List;
  *
  * @author Arman Bilge
  */
-public final class PGMIO {
+public final class Image_one {
 
     /**
      * Magic number representing the binary PGM file type.
@@ -59,7 +59,13 @@ public final class PGMIO {
      */
     private static final int MAXVAL = 255;
 
-    private PGMIO() {}
+    private Image_one() {}
+
+
+    //https://github.com/prashantghimire/PGM-Image-Editing-using-Java/blob/master/getPGM.java
+
+
+
 
     /**
      * Reads a grayscale image from a file in PGM format.
@@ -177,18 +183,59 @@ public final class PGMIO {
 
     public static void main(String[] args) throws IOException {
         File pgmFile = new File("src/A.pgm");
-        int [][] fileRepresentation = PGMIO.read(pgmFile);
+        int [][] fileRepresentation = Image_one.read(pgmFile);
 
         /*
         for(int i = 0; i<fileRepresentation.length; i++){
             for ( int j = 0; j<i; j++){
-                System.out.print (fileRepresentation[i][j] + " ");
+                System.out.println (fileRepresentation[i][j] + " ");
             }
         }
 
+
+        P2
+        # A comment
+        44
+        255
+        52 72 62 33
+        79 111 92 50
+        81 112 92 51
+        52 75  62 37
          */
-        File testPgm = new File("src/Test.pgm");
-        PGMIO.write(fileRepresentation, testPgm);
+        //This is the example given in ex3
+        int [][] fileRepresentationTwo = {
+                {44},
+                {255},
+                {52, 72, 62, 33 },
+                {79, 111, 92, 50},
+                {81, 112, 92, 51},
+                {52, 75,  62, 37}
+        };
+
+        int [][] fileRepresentationThree = {
+                {44},
+                {255},
+                {52},
+                {72},
+                {62},
+                {33},
+                {79},
+                {111},
+                {92},
+                {50},
+                {81},
+                {112},
+                {92},
+                {51},
+                {52},
+                {75},
+                {62},
+                {37}
+        };
+
+
+        File testPgm = new File("src/Test_03.pgm");
+        Image_one.write(fileRepresentationThree, testPgm);
     }
 
 }

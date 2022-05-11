@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 
-public class Image {
+public class Image_old {
+
     public void readFromFile(String filename){
         //Implement
     }
