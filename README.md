@@ -1,2 +1,2 @@
-#README 
-Inf3 repo for exercise three. 
+#Readme 
+this is the readme for exercise 3 
