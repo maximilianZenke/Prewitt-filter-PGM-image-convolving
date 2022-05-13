@@ -9,7 +9,7 @@ public class Image {
     /**
      * Magic number representing the binary PGM file type.
      */
-    private static final String MAGIC = "P5";
+    private static final String MAGIC = "P2";
     /**
      * Character indicating a comment.
      */
@@ -19,6 +19,9 @@ public class Image {
      */
     private static final int MAXVAL = 255;
 
+    //TODO possible solution
+    private static int maxVal;
+
     /**
      *
      * If I understand the assignment correctly, this class has a private attribute representing
@@ -27,10 +30,11 @@ public class Image {
      * -> the write to file uses this.array and writes it into pgm file
      */
     //lets store the image in a 2d array...
-    private short[][] ImageArray;
+    private int[][] ImageArray;
 
     private Image(){
         this.ImageArray = null;
+        this.maxVal = 0;
     }
 
     //setting image Array translates to using readFromFile method
@@ -45,10 +49,11 @@ public class Image {
      * @param filename file being translated
      * @return 2d array representation of filename.pgm (short[][] image)
      */
-    public short[][] readFromFile(String filename){
+    public int[][] readFromFile(String filename){
         //original source for this code is from
-        // https://github.com/prashantghimire/PGM-Image-Editing-using-Java/blob/master  /getPGM.java
-        short [][] image = null;
+        // https://github.com/prashantghimire/PGM-Image-Editing-using-Java/blob/master/getPGM.java
+        // https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
+        int [][] image = null;
         Scanner scan = null;
         try {
             scan = new Scanner(new File(filename));
@@ -73,9 +78,9 @@ public class Image {
             int maxVal = scan.nextInt();
             rows = rows;
             cols = cols;
-            //maxVal = maxVal; I don't think we need this. Can you check @Marcel ?
+            this.maxVal = maxVal; //TODO is this the right way to introduce maxval?
 
-            image = new short[rows][cols];
+            image = new int[rows][cols];
             for (int i = 0; i < rows; ++i) {
                 for (int j = 0; j < cols; ++j) {
                     image[i][j] = scan.nextShort();
@@ -87,6 +92,7 @@ public class Image {
         return image;
     }
 
+
     /**
      * Writes a grayscale image to a file in PGM format.
      * @param image a two-dimensional byte array representation of the image
@@ -95,6 +101,7 @@ public class Image {
      * @throws IllegalArgumentException
      * @throws IOException
      */
+    /*
     public static void write(final int[][] image, final File file, final int maxval) throws IOException {
         if (maxval > MAXVAL)
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
@@ -120,6 +127,7 @@ public class Image {
             stream.close();
         }
     }
+    */
 
     //TODO find out how we can best implement maxVal. It is needed for writeToFilename but not yet
     //properly implemented in the image class. Afterwards read/write methods should work as intended.
@@ -130,7 +138,7 @@ public class Image {
      * @param filename Name of PGM file being created
      */
     public void writeToFilename(String filename) throws IOException {
-        if (maxval > MAXVAL)
+        if (maxVal >= MAXVAL)
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
         final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(filename));
         try {
@@ -140,18 +148,26 @@ public class Image {
             stream.write(" ".getBytes());
             stream.write(Integer.toString(ImageArray.length).getBytes());
             stream.write("\n".getBytes());
-            stream.write(Integer.toString(maxval).getBytes());
+            stream.write(Integer.toString(maxVal).getBytes());
             stream.write("\n".getBytes());
+
+            //here lies the problem!
             for (int i = 0; i < ImageArray.length; ++i) {
                 for (int j = 0; j < ImageArray[0].length; ++j) {
                     final int p = ImageArray[i][j];
-                    if (p < 0 || p > maxval)
-                        throw new IOException("Pixel value " + p + " outside of range [0, " + maxval + "].");
-                    stream.write(ImageArray[i][j]);
+                    System.out.println (p);
+
+                    if (p < 0 || p > maxVal) {
+                        throw new IOException("Pixel value " + p + " outside of range [0, " + maxVal + "].");
+                    }
+                    //stream.write(ImageArray[i][j]);
+                    stream.write(Integer.toString(ImageArray[i][j]).getBytes());
+
                 }
             }
         } finally {
             stream.close();
+
         }
 
     }
@@ -160,17 +176,32 @@ public class Image {
 
     }
 
-    public static void main(String[] args) {
-        //Testing...
+    //TODO to string for displaying imageArray for ImageInstances ....
+
+    public static void main(String[] args) throws IOException {
+        //new image
         Image imageInstance = new Image();
-        short[][] pgmArray = imageInstance.readFromFile("src/p2Pgm.pgm");
+        //set image-array attribute
+        imageInstance.setImageArray("src/p2Pgm.pgm");
 
-        for (short[] row : pgmArray) {
+        int[][] checkImageArray = imageInstance.ImageArray;
 
-            // converting each row as string
-            // and then printing in a separate line
-            System.out.println(Arrays.toString(row));
+        /*
+        for( int i = 0; i<7; i++){
+            for( int j = 0; j< 24; j++){
+                System.out.print (checkImageArray[i][j] + " ");
+            }
+            System.out.print ("\n");
         }
+
+         */
+
+
+        //write image-array to new pgm file
+        imageInstance.writeToFilename("TESTER.pgm");
+
+
+
 
     }
 }
