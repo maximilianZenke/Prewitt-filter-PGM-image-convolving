@@ -1,4 +1,5 @@
 public abstract class borderBehavior {
-    public abstract void getPixelValue(int i, int j,  int[][]image);
+    public abstract int getPixelValue(int i, int j,  int[][]image);
     //todo
+
 }
