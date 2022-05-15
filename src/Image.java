@@ -83,7 +83,7 @@ public class Image {
             image = new int[rows][cols];
             for (int i = 0; i < rows; ++i) {
                 for (int j = 0; j < cols; ++j) {
-                    image[i][j] = scan.nextShort();
+                    image[i][j] = scan.nextInt();
                 }
             }
         } catch (Exception e) {
@@ -151,17 +151,18 @@ public class Image {
             stream.write(Integer.toString(maxVal).getBytes());
             stream.write("\n".getBytes());
 
-            //here lies the problem!
+
             for (int i = 0; i < ImageArray.length; ++i) {
                 for (int j = 0; j < ImageArray[0].length; ++j) {
-                    final int p = ImageArray[i][j];
-                    System.out.println (p);
+                    final int p = ImageArray[i][j]; // p = pixel
+
 
                     if (p < 0 || p > maxVal) {
                         throw new IOException("Pixel value " + p + " outside of range [0, " + maxVal + "].");
                     }
-                    //stream.write(ImageArray[i][j]);
+
                     stream.write(Integer.toString(ImageArray[i][j]).getBytes());
+                    stream.write("\n".getBytes());
 
                 }
             }
@@ -172,7 +173,13 @@ public class Image {
 
     }
 
-    public void convolve(Array Kernel, borderBehavior BB){
+    public Image convolve(Array Kernel, borderBehavior BB){
+
+        //generates new image using kernel
+        //load image
+        //change image with kernel
+        //save changed image
+        return new Image();
 
     }
 
@@ -186,7 +193,7 @@ public class Image {
 
         int[][] checkImageArray = imageInstance.ImageArray;
 
-        /*
+
         for( int i = 0; i<7; i++){
             for( int j = 0; j< 24; j++){
                 System.out.print (checkImageArray[i][j] + " ");
@@ -194,13 +201,22 @@ public class Image {
             System.out.print ("\n");
         }
 
-         */
+        System.out.print ("________________________" + "\n");
 
 
         //write image-array to new pgm file
         imageInstance.writeToFilename("TESTER.pgm");
 
+        Image newImage = new Image();
+        newImage.setImageArray("TESTER.pgm");
+        int[][] checkImageArray2 = newImage.ImageArray;
 
+        for( int i = 0; i<7; i++){
+            for( int j = 0; j< 24; j++){
+                System.out.print (checkImageArray2[i][j] + " ");
+            }
+            System.out.print ("\n");
+        }
 
 
     }

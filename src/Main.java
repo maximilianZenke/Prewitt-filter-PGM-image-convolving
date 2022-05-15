@@ -13,6 +13,13 @@ public class Main {
 
         System.out.println(get_filtered_pixel(3,1,ara,newk,bor));
 
+        for(int i = 0; i < ara.length; i++) {
+            for(int j = 0; j < ara[0].length; j++) {
+                System.out.print(get_filtered_pixel(i,j,ara,newk,bor)+" ");
+            }
+            System.out.println();
+        }
+
     }
 
     public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, borderBehavior behavior) {
@@ -28,11 +35,5 @@ public class Main {
         }
         return final_pixel_value;
         }
-
-
-
-
-
-
     }
 
