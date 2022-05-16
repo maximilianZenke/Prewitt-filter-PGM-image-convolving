@@ -44,7 +44,7 @@ public class KernelFactory {
      */
     public static double[][] createBoxFilter(int size){
         assert (size % 2) != 0 : "size has to be uneven";
-        assert size < 3 : "size is 0, has to be 3 or more ";
+        assert size >= 3 : "size is 0, has to be 3 or more "; //I changed this expression, used to say size <3
 
         //TODO this appears to have no effect
         if (size % 2 == 0){
@@ -54,7 +54,6 @@ public class KernelFactory {
         // new size Array
         double[][] bF = new double[size][size];
 
-        
         for(int i=0; i<size; i++ ) {
             for(int j=0;j<size; j++) {
                 // fill each with value 1 divided by Element Count
@@ -70,6 +69,9 @@ public class KernelFactory {
      * @param arr 2d integer array representation of PGM image.
      */
     public static void print2DArray(double arr[][]){
+
+        assert (arr != null && arr.length > 0): "array is empty";
+
         for(int i=0; i<arr.length; i++ ) {
             for(int j=0;j<arr.length; j++) {
                 // fill each with value 1 divided by Element Count
@@ -81,7 +83,8 @@ public class KernelFactory {
     //TODO delete main
     public static void main(String[] args) {
         System.out.println("Hello World!");
-       // print2DArray(createVerticalPrewittKernel());
+
+        double[][] a = createBoxFilter(2);
        // print2DArray(createHorizontalPrewittKernel());
         // print2DArray(createBoxFilter(3));
 
