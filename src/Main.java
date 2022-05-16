@@ -1,6 +1,19 @@
 public class Main {
 
     public static void main(String[] args) {
+
+        // TODO javadoc
+        // TODO assertions
+        // TODO beautify code
+        // TODO MaxValue ( IMage )
+        // TODO ONLY read p2! Exeption handling
+        // TODO say why we chose to do kernel with double ...
+        // TODO you talked about TWO PICS ? Only one example ( wir haben nur abb 6)
+
+
+
+
+
         System.out.println("Hello World!");
         int[][] ara = {{10,13,12,7},
                         {13,16,8,6},

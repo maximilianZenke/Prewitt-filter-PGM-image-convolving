@@ -1,10 +1,20 @@
 import java.io.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/***
+ * Represents an PGM image
+ * includes methods to:
+ * read PGM file into 2d array
+ * write 2d array into PGM file
+ * get filtered pixel value for convolve operation
+ * convolve image using Kernel- and BorderBehaviour instances
+ *
+ */
 public class Image {
+
+    //TODO to string for displaying imageArray for ImageInstances ....
+    //TODO where is this from?
+    //https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
 
     /**
      * Magic number representing the binary PGM file type.
@@ -15,11 +25,11 @@ public class Image {
      */
     private static final char COMMENT = '#';
     /**
-     * The maximum gray value.
+     * The maximum possible gray value.
      */
     private static final int MAXVAL = 255;
 
-    //TODO possible solution
+    // maximum gray value of individual picture
     private static int maxVal;
 
     /**
@@ -29,35 +39,57 @@ public class Image {
      * ->the readFromFile sets this.array
      * -> the write to file uses this.array and writes it into pgm file
      */
-    //lets store the image in a 2d array...
+
+    // ImageArray attribute represents PGM image as 2d array of integers
     private int[][] ImageArray;
 
+    /***
+     * constructor for image class initializes default state:
+     * imageArray null
+     * max value of picture 0
+     */
     private Image(){
         this.ImageArray = null;
         this.maxVal = 0;
     }
 
     //setting image Array translates to using readFromFile method
+
+    /**
+     * method to set ImageArray attribute
+     * Uses readFromFile method to translate filename.pgm
+     * into 2d array, then stores 2d array in ImageArray.
+     * @param filename name of PGM file being translated and then stored into ImageArray
+     */
     public void setImageArray(String filename) {
         this.ImageArray = readFromFile(filename);
     }
 
+    /**
+     * method to set ImageArray attribute.
+     * Takes already existing 2d Array and stores it into ImageArray Attribute
+     * @param array 2d array of integers being stored into ImageArray
+     */
     public void setImageArray(int[][] array){this.ImageArray = array;};
 
+    /**
+     * getter got ImageArray attribute returns imageArray
+     * @return 2d array of integers representing PGM image
+     */
     public int[][] getImageArray(){
         return this.ImageArray;
     }
 
 
     /***
-     * Function to translate 2d array using pgm file
+     * Function to translate 2d array using PGM file
      * @param filename file being translated
-     * @return 2d array representation of filename.pgm (short[][] image)
+     * @return 2d integer array representation of filename.pgm
      */
     public int[][] readFromFile(String filename){
         //original source for this code is from
         // https://github.com/prashantghimire/PGM-Image-Editing-using-Java/blob/master/getPGM.java
-        // https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
+
         int [][] image = null;
         Scanner scan = null;
         try {
@@ -83,7 +115,7 @@ public class Image {
             int maxVal = scan.nextInt();
             rows = rows;
             cols = cols;
-            this.maxVal = maxVal; //TODO is this the right way to introduce maxval?
+            this.maxVal = maxVal;
 
             image = new int[rows][cols];
             for (int i = 0; i < rows; ++i) {
@@ -103,7 +135,16 @@ public class Image {
      * @param filename Name of PGM file being created
      */
     public void writeToFilename(String filename) throws IOException {
-        if (maxVal >= MAXVAL)
+
+        //original source for this code is from
+        //https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
+
+
+        // if trying to writeToFilename with maxVal 0 -> error
+        maxVal = 255;
+        //TODO iteratate through file and find max number
+
+        if (maxVal > MAXVAL)
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
         final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(filename));
         try {
@@ -121,55 +162,57 @@ public class Image {
                 for (int j = 0; j < ImageArray[0].length; ++j) {
                     final int p = ImageArray[i][j]; // p = pixel
 
-
+                    //TODO what about negative values?
                     if (p < 0 || p > maxVal) {
                         throw new IOException("Pixel value " + p + " outside of range [0, " + maxVal + "].");
                     }
-
                     stream.write(Integer.toString(ImageArray[i][j]).getBytes());
                     stream.write("\n".getBytes());
-
                 }
             }
         } finally {
             stream.close();
-
         }
 
     }
 
+    /**
+     * method to get value of pixel if being filtered with given kernel and borderBehaviour.
+     * Essentially a helper function for convolve method.
+     * @param i x coordinate in 2d integer array representation of PGM image
+     * @param j y coordinate in 2d integer array representation of PGM image
+     * @param image 2d integer array representation of PGM image
+     * @param kernel object used to change image in specified way
+     * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
+     * @return integer value of filtered pixel
+     */
     public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, borderBehavior behavior) {
         int kernel_half = ((kernel.length-1) / 2 );
         int final_pixel_value = 0;
         int current_pixel = 0;
-        //System.out.println("final pixel value pre:"+ final_pixel_value);
-        //System.out.println("i: " + i + " | j: " + j + " ");
         for(int k=-kernel_half; k<=kernel_half; k++ ) {
             for (int l = -kernel_half; l <= kernel_half; l++) {
-                //System.out.println("k: " + k + " | l: " + l + " ");
-
                 int kernel_factor = kernel[k+kernel_half][l+kernel_half];
                 current_pixel = behavior.getPixelValue(i+k, j+l, image);
-                //System.out.println("current:"+ current_pixel);
-
-
                 final_pixel_value += current_pixel * kernel_factor;
-                //System.out.println("final pixel value:"+ final_pixel_value);
             }
         }
-        //System.out.println(final_pixel_value);
         return final_pixel_value;
     }
 
+    /**
+     * method to convolve an image with chosen kernel and borderbehavior
+     * @param Kernel object used to change image in specified way
+     * @param BB object to specify way of changing image (e.g. border - behaviour of chosen kernel )
+     * @return image object with convolved pixel values.
+     */
     public Image convolve(int[][] Kernel, borderBehavior BB) {
-
 
         int rows = ImageArray.length;
         int cols = ImageArray[0].length;
         int[][] convolvedImage = new int[rows][cols];
 
-
-        System.out.print("__________CONVOLVE_START______________" + "\n");
+        //TODO assertions
         //if this.imageArray != null
         Image finalImage = null;
         try {
@@ -177,40 +220,21 @@ public class Image {
             for (int m = 0; m < ImageArray.length; m++) {
                 for (int n = 0; n < ImageArray[0].length; n++) {
                     int x = get_filtered_pixel(m, n, ImageArray, Kernel, BB);
-                    //System.out.println(m);
                     convolvedImage[m][n] = x;
-
-                    //System.out.println(convolvedImage[m][n]);
                 }
-
             }
-
-    /*
-            for( int i = 0; i<ImageArray.length; i++){
-                for( int j = 0; j< ImageArray[0].length; j++){
-                    System.out.print (newImageArray[i][j] + " ");
-                }
-                System.out.print ("\n");
-            }
-
-     */
             finalImage = new Image();
             finalImage.setImageArray(convolvedImage);
-
-
         } catch (NullPointerException e) {
             System.out.println("Empty image cannot be convolved");
             e.printStackTrace();
         }
-
-
-        System.out.print("__________CONVOLVE_END______________" + "\n");
         return finalImage;
     }
 
 
-    //TODO to string for displaying imageArray for ImageInstances ....
 
+    //TODO delete checking
     public static void main(String[] args) throws IOException {
         //new image
         Image imageInstance = new Image();
@@ -271,7 +295,6 @@ public class Image {
         }
 
         //testerImg.writeToFilename("NewConvolve.pgm");
-
         /*
         Image convolvedImage = newImage.convolve(newk, bor);
         int[][] checkImageArray3 = convolvedImage.ImageArray;
@@ -282,9 +305,7 @@ public class Image {
             }
             System.out.print ("\n");
         }
-
         convolvedImage.writeToFilename("convolved.pgm");
-
          */
 
     }
