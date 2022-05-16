@@ -142,7 +142,7 @@ public class Image {
         int kernel_half = ((kernel.length-1) / 2 );
         int final_pixel_value = 0;
         int current_pixel = 0;
-        System.out.println("final pixel value pre:"+ final_pixel_value);
+        //System.out.println("final pixel value pre:"+ final_pixel_value);
         //System.out.println("i: " + i + " | j: " + j + " ");
         for(int k=-kernel_half; k<=kernel_half; k++ ) {
             for (int l = -kernel_half; l <= kernel_half; l++) {
@@ -150,11 +150,11 @@ public class Image {
 
                 int kernel_factor = kernel[k+kernel_half][l+kernel_half];
                 current_pixel = behavior.getPixelValue(i+k, j+l, image);
-                System.out.println("current:"+ current_pixel);
+                //System.out.println("current:"+ current_pixel);
 
 
                 final_pixel_value += current_pixel * kernel_factor;
-                System.out.println("final pixel value:"+ final_pixel_value);
+                //System.out.println("final pixel value:"+ final_pixel_value);
             }
         }
         //System.out.println(final_pixel_value);
@@ -177,10 +177,10 @@ public class Image {
             for (int m = 0; m < ImageArray.length; m++) {
                 for (int n = 0; n < ImageArray[0].length; n++) {
                     int x = get_filtered_pixel(m, n, ImageArray, Kernel, BB);
-                    System.out.println(m);
+                    //System.out.println(m);
                     convolvedImage[m][n] = x;
 
-                    System.out.println(convolvedImage[m][n]);
+                    //System.out.println(convolvedImage[m][n]);
                 }
 
             }
@@ -216,6 +216,8 @@ public class Image {
         Image imageInstance = new Image();
         //set image-array attribute
         imageInstance.setImageArray("src/p2Pgm.pgm");
+        int [][] newk = KernelFactory.createBoringKernel();
+        borderBehavior bor = new ClampingBorderBehavior();
 
         int[][] checkImageArray = imageInstance.ImageArray;
 
@@ -235,7 +237,7 @@ public class Image {
 
         Image newImage = new Image();
         newImage.setImageArray("TESTER.pgm");
-        int[][] checkImageArray2 = newImage.ImageArray;
+        int[][] checkImageArray2 = newImage.convolve(newk,bor).getImageArray();
 
         for( int i = 0; i<7; i++){
             for( int j = 0; j< 24; j++){
@@ -247,8 +249,7 @@ public class Image {
         System.out.print ("________________________" + "\n");
 
 
-        int [][] newk = KernelFactory.createBoringKernel();
-        borderBehavior bor = new ZeroPaddingBorderBehavior();
+
 
         int[][] ara = {{10,13,12,7},
                 {13,16,8,6},

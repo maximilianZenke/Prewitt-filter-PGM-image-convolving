@@ -8,22 +8,18 @@ public class ClampingBorderBehavior extends borderBehavior{
         int height_i = image.length-1;
 
         if (i < 0) {
-            if (j < width_i & j >= 0) {
-                return image[0][j];
+            i = 0;
             }
-            if (j < 0){
-                return image[0][0];
-            }
-            else return image[0][width_i];
+        if (i > height_i){
+            i = height_i;
         }
-        if (i > height_i) {
-            if (j < width_i & j >= 0) {
-                return image[height_i][j];
-            }
-            if (j < 0) {
-                return image[height_i][0];
-            } else return image[height_i][width_i];
+        if (j < 0) {
+            j = 0;
         }
+        if (j>width_i){
+            j = width_i;
+        }
+
         return image[i][j];
     }
 
