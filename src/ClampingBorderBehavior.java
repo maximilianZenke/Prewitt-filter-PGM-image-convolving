@@ -14,9 +14,20 @@ public class ClampingBorderBehavior extends borderBehavior{
     @Override
     public int getPixelValue(int i, int j, int[][] image) {
 
+        assert( image != null && image.length > 0): "image array is empty";
+
         int width_i = image[0].length-1;
         int height_i = image.length-1;
-        //TODO less if statements if possible
+
+        //TODO this might be a better way to go
+        /*
+        if( (i<0) || (j<0) ){
+            i = 0;
+            j = 0;
+         }
+         ...
+         */
+
         if (i < 0) {
             i = 0;
             }

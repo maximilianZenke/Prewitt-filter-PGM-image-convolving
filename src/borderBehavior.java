@@ -10,5 +10,4 @@ public abstract class borderBehavior {
      * @return integer value of pixel at given coordinate
      */
     public abstract int getPixelValue(int i, int j,  int[][]image);
-
 }

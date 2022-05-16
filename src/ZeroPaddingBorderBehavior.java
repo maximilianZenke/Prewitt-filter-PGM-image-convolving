@@ -13,7 +13,9 @@ public class ZeroPaddingBorderBehavior extends borderBehavior{
      */
     @Override
     public int getPixelValue(int i, int j, int [][] image) {
-        //TODO fix multiple return statements
+
+        assert( image != null && image.length > 0): "image array is empty";
+
         if (i > image.length-1 || i < 0){
             return 0;
         }
@@ -23,6 +25,7 @@ public class ZeroPaddingBorderBehavior extends borderBehavior{
         else return image[i][j];
     }
 
+    //TODO fix multiple return statements
     //possible fix for multiple return statements but not tested yet:
     /*
     @Override
