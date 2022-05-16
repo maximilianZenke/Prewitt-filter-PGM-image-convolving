@@ -1,2 +1,3 @@
 #Readme 
-this is the readme for exercise 3 
+Group "Spiel mir das Lied vom Code" - Zenke Prostka 
+
