@@ -2,13 +2,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // TODO javadoc
+        // TODO javadoc -> DONE
         // TODO assertions
         // TODO beautify code
-        // TODO MaxValue ( IMage )
-        // TODO ONLY read p2! Exeption handling
-        // TODO say why we chose to do kernel with double ...
-        // TODO you talked about TWO PICS ? Only one example ( wir haben nur abb 6)
+        // TODO MaxValue ( IMage ) -> DONE ( with max=225 )
+        // TODO ONLY read p2! Exeption handling -> Done but not tested
+        // TODO say why we chose to do kernel with double ... -> discussed but yet to write
+        // TODO you talked about TWO PICS ? Only one example ( wir haben nur abb 6) -> Done
 
 
 

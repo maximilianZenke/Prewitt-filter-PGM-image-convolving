@@ -70,7 +70,9 @@ public class Image {
      * Takes already existing 2d Array and stores it into ImageArray Attribute
      * @param array 2d array of integers being stored into ImageArray
      */
-    public void setImageArray(int[][] array){this.ImageArray = array;};
+    public void setImageArray(int[][] array){
+        this.ImageArray = array;
+    }
 
     /**
      * getter got ImageArray attribute returns imageArray
@@ -90,8 +92,12 @@ public class Image {
         //original source for this code is from
         // https://github.com/prashantghimire/PGM-Image-Editing-using-Java/blob/master/getPGM.java
 
+        //check if file with path(filename) exists
+        assert (new File(filename).isFile()): "File does not exist";
+
         int [][] image = null;
         Scanner scan = null;
+
         try {
             scan = new Scanner(new File(filename));
         } catch (FileNotFoundException e) {
@@ -100,13 +106,13 @@ public class Image {
         }
         try {
             String temp = scan.next();
-            // verify P2 file...
+            // verify P2 file
             if (!temp.equals("P2")) {
                 System.out.println("Image Value: " + temp);
                 System.out.println("NOT A VALID PGM FILE... ONLY P2 FILES SUPPORTED HERE...");
                 System.exit(1);
             }
-            // remove comments...
+            // remove comments
             while (!scan.hasNextInt()) {
                 scan.nextLine();
             }
@@ -133,22 +139,30 @@ public class Image {
     /***
      * Function to create PGM file using 2d array
      * @param filename Name of PGM file being created
+     * original source for this code is from
+     * https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
      */
     public void writeToFilename(String filename) throws IOException {
 
-        //original source for this code is from
-        //https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
+        //if length of filename is at least 5 characters (minimum would be one char with .pgm extension )
+        assert ((filename.length() >= 5)): "filename has to have at least one character and end with '.pgm'";
+        //check if filename is valid ( has .pgm extension )
+        assert(filename.substring(filename.length() - 3).equals("pgm")): "filename must end with .pgm";
 
-
-        // if trying to writeToFilename with maxVal 0 -> error
         maxVal = 255;
-        //TODO iteratate through file and find max number
+        //TODO iteratate through file and find max number ! is this already fixed? Test!
 
         if (maxVal > MAXVAL)
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
         final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(filename));
-        try {
+
+        try{
             stream.write(MAGIC.getBytes());
+            //TODO Test!
+            if(!stream.toString().contains("P2")){
+                throw new IllegalArgumentException("PGM File can only be version P2");
+            }
+
             stream.write("\n".getBytes());
             stream.write(Integer.toString(ImageArray[0].length).getBytes());
             stream.write(" ".getBytes());
@@ -156,7 +170,6 @@ public class Image {
             stream.write("\n".getBytes());
             stream.write(Integer.toString(maxVal).getBytes());
             stream.write("\n".getBytes());
-
 
             for (int i = 0; i < ImageArray.length; ++i) {
                 for (int j = 0; j < ImageArray[0].length; ++j) {
@@ -173,7 +186,6 @@ public class Image {
         } finally {
             stream.close();
         }
-
     }
 
     /**
@@ -187,6 +199,11 @@ public class Image {
      * @return integer value of filtered pixel
      */
     public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, borderBehavior behavior) {
+
+        assert ( image != null && image.length > 0): "no image array given";
+        assert ( kernel != null && kernel.length > 0): "no kernel array given";
+        assert ( behavior != null ): "no border behavior given";
+
         int kernel_half = ((kernel.length-1) / 2 );
         int final_pixel_value = 0;
         int current_pixel = 0;
@@ -202,24 +219,25 @@ public class Image {
 
     /**
      * method to convolve an image with chosen kernel and borderbehavior
-     * @param Kernel object used to change image in specified way
-     * @param BB object to specify way of changing image (e.g. border - behaviour of chosen kernel )
+     * @param kernel object used to change image in specified way
+     * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
      * @return image object with convolved pixel values.
      */
-    public Image convolve(int[][] Kernel, borderBehavior BB) {
+    public Image convolve(int[][] kernel, borderBehavior behavior) {
+
+        assert ( kernel != null && kernel.length > 0): "no kernel array given";
+        assert ( behavior != null ): "no border behavior given";
+        assert ( this.ImageArray != null): "image array is empty";
 
         int rows = ImageArray.length;
         int cols = ImageArray[0].length;
         int[][] convolvedImage = new int[rows][cols];
-
-        //TODO assertions
-        //if this.imageArray != null
         Image finalImage = null;
-        try {
 
+        try {
             for (int m = 0; m < ImageArray.length; m++) {
                 for (int n = 0; n < ImageArray[0].length; n++) {
-                    int x = get_filtered_pixel(m, n, ImageArray, Kernel, BB);
+                    int x = get_filtered_pixel(m, n, ImageArray, kernel, behavior);
                     convolvedImage[m][n] = x;
                 }
             }
@@ -231,7 +249,6 @@ public class Image {
         }
         return finalImage;
     }
-
 
 
     //TODO delete checking
