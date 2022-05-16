@@ -1,20 +1,35 @@
+/**
+ * class for creating Prewitt filter kernels
+ */
 public class KernelFactory {
 
+    /**
+     * creates Vertical Prewitt Kernel
+     * @return 2d integer array representation of vertical Prewitt Kernel
+     */
     public static int[][] createVerticalPrewittKernel(){
-        //implement 
         int[][] vP={{-1, 0, 1},
                     {-1, 0, 1},
                     {-1, 0, 1}};
         return vP;
        }
 
+    /**
+     * creates horizontal Prewitt Kernel
+     * @return 2d integer array representation of horizontal Prewitt Kernel
+     */
     public static int[][] createHorizontalPrewittKernel(){
-        //implement
         int[][] hP={{-1,-1,-1},
                     {0, 0, 0},
                     {1, 1, 1}};
         return hP;
     }
+
+    //TODO which kernel is that? Where is that from?
+    /**
+     * creates Vertical Prewitt Kernel
+     * @return 2d integer array representation of vertical Prewitt Kernel
+     */
     public static int[][] createBoringKernel(){
         //implement
         int[][] bK={{1,1,1},
@@ -23,11 +38,15 @@ public class KernelFactory {
         return bK;
     }
 
+    /**
+     * creates box filter Kernel
+     * @return 2d integer array representation of box filter kernel
+     */
     public static double[][] createBoxFilter(int size){
-        //implement
         assert (size % 2) != 0 : "size has to be uneven";
         assert size < 3 : "size is 0, has to be 3 or more ";
 
+        //TODO this appears to have no effect
         if (size % 2 == 0){
             size -= 1;
         }
@@ -44,6 +63,12 @@ public class KernelFactory {
         }
         return bF;
     }
+
+    /**
+     * method to print 2d integer array representation of PGM image.
+     * Used for testing
+     * @param arr 2d integer array representation of PGM image.
+     */
     public static void print2DArray(double arr[][]){
         for(int i=0; i<arr.length; i++ ) {
             for(int j=0;j<arr.length; j++) {
@@ -53,6 +78,7 @@ public class KernelFactory {
         }
     }
 
+    //TODO delete main
     public static void main(String[] args) {
         System.out.println("Hello World!");
        // print2DArray(createVerticalPrewittKernel());
