@@ -44,6 +44,10 @@ public class Image {
 
     public void setImageArray(int[][] array){this.ImageArray = array;};
 
+    public int[][] getImageArray(){
+        return this.ImageArray;
+    }
+
 
     /***
      * Function to translate 2d array using pgm file
@@ -137,41 +141,50 @@ public class Image {
     public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, borderBehavior behavior) {
         int kernel_half = ((kernel.length-1) / 2 );
         int final_pixel_value = 0;
-
+        int current_pixel = 0;
+        System.out.println("final pixel value pre:"+ final_pixel_value);
         //System.out.println("i: " + i + " | j: " + j + " ");
         for(int k=-kernel_half; k<=kernel_half; k++ ) {
             for (int l = -kernel_half; l <= kernel_half; l++) {
                 //System.out.println("k: " + k + " | l: " + l + " ");
+
                 int kernel_factor = kernel[k+kernel_half][l+kernel_half];
-                int current_pixel = behavior.getPixelValue(i+k, j+l, image);
+                current_pixel = behavior.getPixelValue(i+k, j+l, image);
+                System.out.println("current:"+ current_pixel);
+
+
                 final_pixel_value += current_pixel * kernel_factor;
-                //System.out.println(final_pixel_value);
+                System.out.println("final pixel value:"+ final_pixel_value);
             }
         }
         //System.out.println(final_pixel_value);
         return final_pixel_value;
     }
 
-    public Image convolve(int[][] Kernel, borderBehavior BB){
-
-        Image convolvedImage = new Image();
-        int[][] newImageArray = ImageArray;
+    public Image convolve(int[][] Kernel, borderBehavior BB) {
 
 
-        System.out.print ("__________CONVOLVE_START______________" + "\n");
+        int rows = ImageArray.length;
+        int cols = ImageArray[0].length;
+        int[][] convolvedImage = new int[rows][cols];
+
+
+        System.out.print("__________CONVOLVE_START______________" + "\n");
         //if this.imageArray != null
-        try{
+        Image finalImage = null;
+        try {
 
-            for(int m = 0; m< ImageArray.length; m++ ){
-                for(int n = 0; n <ImageArray[0].length; n++){
+            for (int m = 0; m < ImageArray.length; m++) {
+                for (int n = 0; n < ImageArray[0].length; n++) {
                     int x = get_filtered_pixel(m, n, ImageArray, Kernel, BB);
-                    newImageArray[m][n] = x;
+                    System.out.println(m);
+                    convolvedImage[m][n] = x;
 
-                    System.out.println(newImageArray[m][n]);
+                    System.out.println(convolvedImage[m][n]);
                 }
+
             }
 
-            convolvedImage.setImageArray(newImageArray);
     /*
             for( int i = 0; i<ImageArray.length; i++){
                 for( int j = 0; j< ImageArray[0].length; j++){
@@ -181,16 +194,18 @@ public class Image {
             }
 
      */
+            finalImage = new Image();
+            finalImage.setImageArray(convolvedImage);
 
 
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Empty image cannot be convolved");
             e.printStackTrace();
         }
 
 
-        System.out.print ("__________CONVOLVE_END______________" + "\n");
-        return convolvedImage;
+        System.out.print("__________CONVOLVE_END______________" + "\n");
+        return finalImage;
     }
 
 
@@ -241,13 +256,15 @@ public class Image {
                 {13,12,11,9}};
 
         Image testerImg = new Image();
-        testerImg.ImageArray = ara;
-        testerImg.convolve(newk, bor);
-        int[][] checkImageArray3 = testerImg.ImageArray;
 
-        for( int i = 0; i<7; i++){
-            for( int j = 0; j< 24; j++){
-                System.out.print (checkImageArray3[i][j] + " ");
+        testerImg.ImageArray = ara;
+
+        Image finalImage = testerImg.convolve(newk, bor);
+        int [][] checkImageArray3 = finalImage.getImageArray();
+
+        for( int x = 0; x <checkImageArray3.length; ++x){
+            for( int y = 0; y < checkImageArray3[0].length; ++y){
+                System.out.print (checkImageArray3[x][y] + " ");
             }
             System.out.print ("\n");
         }

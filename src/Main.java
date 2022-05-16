@@ -11,7 +11,13 @@ public class Main {
         int [][] newk = factory.createBoringKernel();
         borderBehavior bor = new ZeroPaddingBorderBehavior();
 
-        System.out.println(get_filtered_pixel(3,1,ara,newk,bor));
+        System.out.println(get_filtered_pixel(3,3,ara,newk,bor));
+        for(int i = 0; i < ara.length; i++) {
+            for(int j = 0; j < ara[0].length; j++) {
+                System.out.print(get_filtered_pixel(i,j,ara,newk,bor)+" ");
+            }
+            System.out.println();
+        }
 
         for(int i = 0; i < ara.length; i++) {
             for(int j = 0; j < ara[0].length; j++) {
