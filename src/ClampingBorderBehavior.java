@@ -9,7 +9,7 @@ public class ClampingBorderBehavior extends borderBehavior{
      * @param i x coordinate in 2d integer array representation of PGM image
      * @param j y coordinate in 2d integer array representation of PGM image
      * @param image 2d integer array representation of PGM image
-     * @return int value of next edge pixel for i, j outside of border
+     * @return int value of pixel
      */
     @Override
     public int getPixelValue(int i, int j, int[][] image) {
