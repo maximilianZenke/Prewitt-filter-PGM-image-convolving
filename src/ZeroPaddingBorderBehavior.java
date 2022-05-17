@@ -1,7 +1,7 @@
 /**
  * specification of abstract class borderBehavior realizing zero padding as border behavior
  */
-public class ZeroPaddingBorderBehavior extends borderBehavior{
+public class ZeroPaddingBorderBehavior extends BorderBehavior {
     /**
      * specification of getPixelValue method from abstract parent class.
      * zero padding = return 0 for coordinates i, j outside of image

@@ -21,5 +21,5 @@ which can not appropriately be represented as Integer ). We were therefore left 
 <li>Write createBoxFilter() using doubles and interfere with the UML </li>
 </ol>
 
-<p>Finally, we decided to stick with <b style="background-color: yellow">......TODO......</b></p> 
+<p>Finally, we decided to stick with <b>......TODO......</b></p> 
 

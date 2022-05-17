@@ -11,11 +11,6 @@ import java.util.Scanner;
  *
  */
 public class Image {
-
-    //TODO to string for displaying imageArray for ImageInstances ....
-    //TODO where is this from?
-    //https://gist.github.com/armanbilge/3276d80030d1caa2ed7c
-
     /**
      * Magic number representing the binary PGM file type.
      */
@@ -32,6 +27,7 @@ public class Image {
     // maximum gray value of individual picture
     private static int maxVal;
 
+    //TODO rewrite that ( or put it into doc )
     /**
      *
      * If I understand the assignment correctly, this class has a private attribute representing
@@ -48,7 +44,7 @@ public class Image {
      * imageArray null
      * max value of picture 0
      */
-    private Image(){
+    public Image(){
         this.ImageArray = null;
         this.maxVal = 0;
     }
@@ -81,7 +77,6 @@ public class Image {
     public int[][] getImageArray(){
         return this.ImageArray;
     }
-
 
     /***
      * Function to translate 2d array using PGM file
@@ -150,7 +145,7 @@ public class Image {
         assert(filename.substring(filename.length() - 3).equals("pgm")): "filename must end with .pgm";
 
         maxVal = 255;
-        //TODO iteratate through file and find max number ! is this already fixed? Test!
+        //TODO tell why we did that -> he said we only have to read the example files ( which are always maxval 255 )!
 
         if (maxVal > MAXVAL)
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
@@ -158,10 +153,12 @@ public class Image {
 
         try{
             stream.write(MAGIC.getBytes());
+            /*
             //TODO Test!
             if(!stream.toString().contains("P2")){
                 throw new IllegalArgumentException("PGM File can only be version P2");
             }
+             */
 
             stream.write("\n".getBytes());
             stream.write(Integer.toString(ImageArray[0].length).getBytes());
@@ -175,10 +172,13 @@ public class Image {
                 for (int j = 0; j < ImageArray[0].length; ++j) {
                     final int p = ImageArray[i][j]; // p = pixel
 
+                    /*
                     //TODO what about negative values?
                     if (p < 0 || p > maxVal) {
                         throw new IOException("Pixel value " + p + " outside of range [0, " + maxVal + "].");
                     }
+
+                     */
                     stream.write(Integer.toString(ImageArray[i][j]).getBytes());
                     stream.write("\n".getBytes());
                 }
@@ -198,7 +198,7 @@ public class Image {
      * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
      * @return integer value of filtered pixel
      */
-    public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, borderBehavior behavior) {
+    public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, BorderBehavior behavior) {
 
         assert ( image != null && image.length > 0): "no image array given";
         assert ( kernel != null && kernel.length > 0): "no kernel array given";
@@ -223,7 +223,7 @@ public class Image {
      * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
      * @return image object with convolved pixel values.
      */
-    public Image convolve(int[][] kernel, borderBehavior behavior) {
+    public Image convolve(int[][] kernel, BorderBehavior behavior) {
 
         assert ( kernel != null && kernel.length > 0): "no kernel array given";
         assert ( behavior != null ): "no border behavior given";
@@ -258,7 +258,7 @@ public class Image {
         //set image-array attribute
         imageInstance.setImageArray("src/p2Pgm.pgm");
         int [][] newk = KernelFactory.createBoringKernel();
-        borderBehavior bor = new ClampingBorderBehavior();
+        BorderBehavior bor = new ClampingBorderBehavior();
 
         int[][] checkImageArray = imageInstance.ImageArray;
 

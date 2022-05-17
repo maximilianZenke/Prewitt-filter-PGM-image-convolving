@@ -62,7 +62,27 @@ public class KernelFactory {
         }
         return bF;
     }
+    //TODO what the fuck
+    public static int[][] createINTBoxFilter(int size) {
+        assert (size % 2) != 0 : "size has to be uneven";
+        assert size >= 3 : "size is 0, has to be 3 or more "; //I changed this expression, used to say size <3
 
+        //TODO this appears to have no effect
+        if (size % 2 == 0) {
+            size -= 1;
+        }
+
+        // new size Array
+        int[][] bF = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                // fill each with value 1 divided by Element Count
+                (bF[i][j]) = (int) (1.0 / (size * size)); //TODO PROBLEM
+            }
+        }
+        return bF;
+    }
     /**
      * method to print 2d integer array representation of PGM image.
      * Used for testing

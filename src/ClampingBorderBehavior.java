@@ -1,7 +1,7 @@
 /**
  * specification of abstract class borderBehavior realizing clamping as border behavior
  */
-public class ClampingBorderBehavior extends borderBehavior{
+public class ClampingBorderBehavior extends BorderBehavior {
     /**
      * specification of getPixelValue method from abstract parent class.
      * Clamping = return next edge pixel value for coordinates i, j outside of image
@@ -11,7 +11,7 @@ public class ClampingBorderBehavior extends borderBehavior{
      * @param image 2d integer array representation of PGM image
      * @return int value of pixel
      */
-    @Override
+
     public int getPixelValue(int i, int j, int[][] image) {
 
         assert( image != null && image.length > 0): "image array is empty";
