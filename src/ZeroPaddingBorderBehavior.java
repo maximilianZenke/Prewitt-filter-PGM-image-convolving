@@ -15,17 +15,14 @@ public class ZeroPaddingBorderBehavior extends BorderBehavior {
      */
     @Override
     public int getPixelValue(int i, int j, int [][] image) {
+        int result = 0;
 
-        assert( image != null & Objects.requireNonNull(image).length > 0): "image array is empty";
+        assert (image != null & Objects.requireNonNull(image).length > 0) : "image array is empty";
 
-        //TODO write why we do that @Marcel
-        if (i > image.length-1 || i < 0){
-            return 0;
+        if (i <= image.length - 1 && i >= 0) if (j <= image[0].length - 1 && j >= 0) {
+            result = image[i][j];
         }
-        else if(j > image[0].length-1 || j < 0){
-            return 0;
-        }
-        else return image[i][j];
+        return result;
     }
 
     //TODO delete main

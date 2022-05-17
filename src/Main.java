@@ -47,7 +47,7 @@ public class Main {
         bild1ColvolcedHZ.writeToFilename("ZeroPadded/1_horizontal.pgm");
         bild1ColvolcedVZ.writeToFilename("ZeroPadded/1_vertical.pgm");
 
-        //wirte bild 2 colvolved to file
+        //write bild 2 colvolved to file
         bild2ConvolvedB3C.writeToFilename("Clamped/2_5.pgm");
         bild2ConvolvedB11C.writeToFilename("Clamped/2_11.pgm");
         bild2ConvolvedB27C.writeToFilename("Clamped/2_27.pgm");
