@@ -13,16 +13,21 @@ completed exercise two using Python.
 We encountered a problem when we started implementing the "createBoxFilter()" method inside KernelFactory. 
 The given UML clearly states that it should return a two dimensional array of integers, 
 however the boxFilter requires decimal numbers ( f.e. every Element in 3x3 boxFilter has a value of 1/9, 
-which can not appropriately be represented as Integer ). As Java as a static typing language, we were forced to choose between 
-
+which can not appropriately be represented as Integer ). As Java as a static typing language, we were forced to to find a solution that is in line with both, the UML and our needs.
 </p>
 
-<ol>
-<li>Write createBoxFilter() using Integers and misrepresent its values </li>
-<li>Write createBoxFilter() using doubles and interfere with the UML and many other functionalities using integers instead of doubles.</li>
-</ol>
-
-<p>Finally, we choose the best of both worlds: We implemented a boxFilter using a double[][] array, just like the UML stated, but implemented another boxFilter, using an int[][] array. The former cannot be used, because, as stated above, many other functionalities rely on integers. The latter can be used, but produces only black pictures, because its values will always be less than one and will therefore be cut to zero, because they are integers.</p> 
+<p> Luckily, we found a way to satisfy all sides:</p>
+<ul>
+<li>
+We implemented createBoxfilter using integers ( to satisfy the UML ). This method compiles but leads to incorrect results.
+</li>
+<li>
+We implemented createBoxfilter using doubles ( to satisfy the functionalities inherent need for doubles ). This method does compile but cannot be used because many other functionalities rely on integers. 
+</li>
+<li>
+We found a way to somewhat work dynamically with our values, using the java Number class. We implemented extra methods, to show how this solves our problem and added additional test-cases to our main. Using this approach we managed to use the boxFilter as intended. As seen inside the Clamping-Folder, our Numbers-solution leads to good results. We therefore consider this a good solution to our problem.
+</li>
+</ul>
 
 <p>In the end, we think that the createBoxFilter functionality does not go along well with Javas static typing. The former tutor was right, assuming that Python with its dynamic typing would be a better candidate for completing this task </p>
 
