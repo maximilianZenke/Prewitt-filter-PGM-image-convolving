@@ -29,7 +29,6 @@ public class Image {
 
     //TODO rewrite that ( or put it into doc )
     /**
-     *
      * If I understand the assignment correctly, this class has a private attribute representing
      * the image as a 2d array
      * ->the readFromFile sets this.array
@@ -44,7 +43,7 @@ public class Image {
      * imageArray null
      * max value of picture 0
      */
-    public Image(){
+    public Image() {
         this.ImageArray = null;
         this.maxVal = 0;
     }
@@ -55,6 +54,7 @@ public class Image {
      * method to set ImageArray attribute
      * Uses readFromFile method to translate filename.pgm
      * into 2d array, then stores 2d array in ImageArray.
+     *
      * @param filename name of PGM file being translated and then stored into ImageArray
      */
     public void setImageArray(String filename) {
@@ -64,17 +64,19 @@ public class Image {
     /**
      * method to set ImageArray attribute.
      * Takes already existing 2d Array and stores it into ImageArray Attribute
+     *
      * @param array 2d array of integers being stored into ImageArray
      */
-    public void setImageArray(int[][] array){
+    public void setImageArray(int[][] array) {
         this.ImageArray = array;
     }
 
     /**
      * getter got ImageArray attribute returns imageArray
+     *
      * @return 2d array of integers representing PGM image
      */
-    public int[][] getImageArray(){
+    public int[][] getImageArray() {
         return this.ImageArray;
     }
 
@@ -83,14 +85,14 @@ public class Image {
      * @param filename file being translated
      * @return 2d integer array representation of filename.pgm
      */
-    public int[][] readFromFile(String filename){
+    public int[][] readFromFile(String filename) {
         //original source for this code is from
         // https://github.com/prashantghimire/PGM-Image-Editing-using-Java/blob/master/getPGM.java
 
         //check if file with path(filename) exists
-        assert (new File(filename).isFile()): "File does not exist";
+        assert (new File(filename).isFile()) : "File does not exist";
 
-        int [][] image = null;
+        int[][] image = null;
         Scanner scan = null;
 
         try {
@@ -140,9 +142,9 @@ public class Image {
     public void writeToFilename(String filename) throws IOException {
 
         //if length of filename is at least 5 characters (minimum would be one char with .pgm extension )
-        assert ((filename.length() >= 5)): "filename has to have at least one character and end with '.pgm'";
+        assert ((filename.length() >= 5)) : "filename has to have at least one character and end with '.pgm'";
         //check if filename is valid ( has .pgm extension )
-        assert(filename.substring(filename.length() - 3).equals("pgm")): "filename must end with .pgm";
+        assert (filename.substring(filename.length() - 3).equals("pgm")) : "filename must end with .pgm";
 
         maxVal = 255;
         //TODO tell why we did that -> he said we only have to read the example files ( which are always maxval 255 )!
@@ -151,7 +153,7 @@ public class Image {
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
         final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(filename));
 
-        try{
+        try {
             stream.write(MAGIC.getBytes());
             /*
             //TODO Test!
@@ -191,26 +193,27 @@ public class Image {
     /**
      * method to get value of pixel if being filtered with given kernel and borderBehaviour.
      * Essentially a helper function for convolve method.
-     * @param i x coordinate in 2d integer array representation of PGM image
-     * @param j y coordinate in 2d integer array representation of PGM image
-     * @param image 2d integer array representation of PGM image
-     * @param kernel object used to change image in specified way
+     *
+     * @param i        x coordinate in 2d integer array representation of PGM image
+     * @param j        y coordinate in 2d integer array representation of PGM image
+     * @param image    2d integer array representation of PGM image
+     * @param kernel   object used to change image in specified way
      * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
      * @return integer value of filtered pixel
      */
-    public static int get_filtered_pixel(int i, int j, int[][] image, int [][] kernel, BorderBehavior behavior) {
+    public static int get_filtered_pixel(int i, int j, int[][] image, int[][] kernel, BorderBehavior behavior) {
 
-        assert ( image != null && image.length > 0): "no image array given";
-        assert ( kernel != null && kernel.length > 0): "no kernel array given";
-        assert ( behavior != null ): "no border behavior given";
+        assert (image != null && image.length > 0) : "no image array given";
+        assert (kernel != null && kernel.length > 0) : "no kernel array given";
+        assert (behavior != null) : "no border behavior given";
 
-        int kernel_half = ((kernel.length-1) / 2 );
+        int kernel_half = ((kernel.length - 1) / 2);
         int final_pixel_value = 0;
         int current_pixel = 0;
-        for(int k=-kernel_half; k<=kernel_half; k++ ) {
+        for (int k = -kernel_half; k <= kernel_half; k++) {
             for (int l = -kernel_half; l <= kernel_half; l++) {
-                int kernel_factor = kernel[k+kernel_half][l+kernel_half];
-                current_pixel = behavior.getPixelValue(i+k, j+l, image);
+                int kernel_factor = kernel[k + kernel_half][l + kernel_half];
+                current_pixel = behavior.getPixelValue(i + k, j + l, image);
                 final_pixel_value += current_pixel * kernel_factor;
             }
         }
@@ -219,15 +222,16 @@ public class Image {
 
     /**
      * method to convolve an image with chosen kernel and borderbehavior
-     * @param kernel object used to change image in specified way
+     *
+     * @param kernel   object used to change image in specified way
      * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
      * @return image object with convolved pixel values.
      */
     public Image convolve(int[][] kernel, BorderBehavior behavior) {
 
-        assert ( kernel != null && kernel.length > 0): "no kernel array given";
-        assert ( behavior != null ): "no border behavior given";
-        assert ( this.ImageArray != null): "image array is empty";
+        assert (kernel != null && kernel.length > 0) : "no kernel array given";
+        assert (behavior != null) : "no border behavior given";
+        assert (this.ImageArray != null) : "image array is empty";
 
         int rows = ImageArray.length;
         int cols = ImageArray[0].length;
@@ -252,6 +256,7 @@ public class Image {
 
 
     //TODO delete checking
+    /*
     public static void main(String[] args) throws IOException {
         //new image
         Image imageInstance = new Image();
@@ -325,6 +330,7 @@ public class Image {
         convolvedImage.writeToFilename("convolved.pgm");
          */
 
+
     }
-}
+
 

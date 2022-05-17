@@ -51,5 +51,8 @@ public class ClampingBorderBehavior extends BorderBehavior {
                         {-1,12,2, 0, 4}};
         System.out.println(ara[0][ara[0].length-1]);
         System.out.println(new ClampingBorderBehavior().getPixelValue(3, 2, ara));
+
+        int[][] failure = {{}};
+        new ClampingBorderBehavior().getPixelValue(1,1,failure);
     }
 }

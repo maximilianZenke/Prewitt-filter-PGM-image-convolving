@@ -104,7 +104,9 @@ public class KernelFactory {
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        double[][] a = createBoxFilter(2);
+        //double[][] a = createBoxFilter(2);
+        double[][] failure = {{}};
+        print2DArray(failure);
        // print2DArray(createHorizontalPrewittKernel());
         // print2DArray(createBoxFilter(3));
 

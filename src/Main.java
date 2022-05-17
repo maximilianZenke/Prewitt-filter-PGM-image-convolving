@@ -26,9 +26,9 @@ public class Main {
 
         //Pictures...
         Image bild1 = new Image();
-        bild1.setImageArray("src/Bild 1.pgm");
+        bild1.setImageArray("Pictures/Bild 1.pgm");
         Image bild2 = new Image();
-        bild2.setImageArray("src/Bild 2.pgm");
+        bild2.setImageArray("Pictures/Bild 2.pgm");
 
         //colvolve bild 1
         //TODO wieso anders Ergebnis?
