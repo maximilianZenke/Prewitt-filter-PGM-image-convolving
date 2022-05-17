@@ -16,7 +16,7 @@ however the boxFilter requires decimal numbers ( f.e. every Element in 3x3 boxFi
 which can not appropriately be represented as Integer ). As Java as a static typing language, we were forced to to find a solution that is in line with both, the UML and our needs.
 </p>
 
-<p> Luckily, we found a way to satisfy all sides:</p>
+<p> Luckily, we found a way to satisfy all sides. We implemented the following (additional) solutions:</p>
 <ul>
 <li>
 We implemented createBoxfilter using integers ( to satisfy the UML ). This method compiles but leads to incorrect results.
@@ -40,3 +40,14 @@ To implement this test, we created an additional environment in shape of a folde
 After completing our test we opened the two outcome pictures in GIMP and compared them to the outcome pictures on the website. Fortunately they matched. We therefore assume, that our algorithm works as intended. <br>
 
 *If you want to assure that our testing lead to the described results, we recommend you re-run the main in the Testing class, open the output stored in the TestingPictures-folder with GIMP and compare it with the corresponding images on the website stated above.*
+
+<b>Answers to the Questions stated in the exercise</b>
+
+<ul>
+<li>
+4.1:  Clamping includes the sides of an image, due to copying its values and therefore includes the outer borders of the motive. Zero-padding however replaces the border values with "0", excluding the outer borders of the motive.
+</li>
+<li>
+4.2: The Box-filter is a blur filter. With increasing its size, the image gradually becomes more blurry. To do so, the filter calculates the average values in its given range. Therefore, Zero-padding leaves a small-dark border at the outside of the image. Clamping includes the outer values, therefore it does not change the average pixel value, 
+</li>
+</ul>

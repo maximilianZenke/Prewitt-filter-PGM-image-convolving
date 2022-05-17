@@ -2,6 +2,9 @@ import java.io.IOException;
 
 public class Testing {
     public static void main(String[] args) throws IOException {
+
+        //this is our additional testing te see if our algorithms would match the expected outcome
+        //from the tutorial website. Please see Readme for further information.
         int [][] horizontalKernel = KernelFactory.createHorizontalPrewittKernel();
         int [][] verticalKernel = KernelFactory.createVerticalPrewittKernel();
         BorderBehavior clampingBorderBehavior = new ClampingBorderBehavior();

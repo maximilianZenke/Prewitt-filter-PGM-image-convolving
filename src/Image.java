@@ -28,7 +28,6 @@ public class Image {
     // maximum gray value of individual picture
     private static int maxVal;
 
-    //TODO rewrite that ( or put it into doc )
     /**
      * If I understand the assignment correctly, this class has a private attribute representing
      * the image as a 2d array
@@ -148,7 +147,6 @@ public class Image {
         assert (filename.substring(filename.length() - 3).equals("pgm")) : "filename must end with .pgm";
 
         maxVal = 255;
-        //TODO tell why we did that -> he said we only have to read the example files ( which are always maxval 255 )!
 
         if (maxVal > MAXVAL)
             throw new IllegalArgumentException("The maximum gray value cannot exceed " + MAXVAL + ".");
@@ -156,13 +154,6 @@ public class Image {
 
         try {
             stream.write(MAGIC.getBytes());
-            /*
-            //TODO Test!
-            if(!stream.toString().contains("P2")){
-                throw new IllegalArgumentException("PGM File can only be version P2");
-            }
-             */
-
             stream.write("\n".getBytes());
             stream.write(Integer.toString(ImageArray[0].length).getBytes());
             stream.write(" ".getBytes());
@@ -174,14 +165,6 @@ public class Image {
             for (int i = 0; i < ImageArray.length; ++i) {
                 for (int j = 0; j < ImageArray[0].length; ++j) {
                     final int p = ImageArray[i][j]; // p = pixel
-
-                    /*
-                    //TODO what about negative values?
-                    if (p < 0 || p > maxVal) {
-                        throw new IOException("Pixel value " + p + " outside of range [0, " + maxVal + "].");
-                    }
-
-                     */
                     stream.write(Integer.toString(ImageArray[i][j]).getBytes());
                     stream.write("\n".getBytes());
                 }
@@ -321,82 +304,6 @@ public class Image {
         }
         return finalImage;
     }
-
-
-    //TODO delete checking
-    /*
-    public static void main(String[] args) throws IOException {
-        //new image
-        Image imageInstance = new Image();
-        //set image-array attribute
-        imageInstance.setImageArray("src/p2Pgm.pgm");
-        int [][] newk = KernelFactory.createBoringKernel();
-        BorderBehavior bor = new ClampingBorderBehavior();
-
-        int[][] checkImageArray = imageInstance.ImageArray;
-
-
-        for( int i = 0; i<7; i++){
-            for( int j = 0; j< 24; j++){
-                System.out.print (checkImageArray[i][j] + " ");
-            }
-            System.out.print ("\n");
-        }
-
-        System.out.print ("________________________" + "\n");
-
-
-        //write image-array to new pgm file
-        imageInstance.writeToFilename("TESTER.pgm");
-
-        Image newImage = new Image();
-        newImage.setImageArray("TESTER.pgm");
-        int[][] checkImageArray2 = newImage.convolve(newk,bor).getImageArray();
-
-        for( int i = 0; i<7; i++){
-            for( int j = 0; j< 24; j++){
-                System.out.print (checkImageArray2[i][j] + " ");
-            }
-            System.out.print ("\n");
-        }
-
-        System.out.print ("________________________" + "\n");
-
-
-
-
-        int[][] ara = {{10,13,12,7},
-                {13,16,8,6},
-                {14,13,12,5},
-                {13,12,11,9}};
-
-        Image testerImg = new Image();
-
-        testerImg.ImageArray = ara;
-
-        Image finalImage = testerImg.convolve(newk, bor);
-        int [][] checkImageArray3 = finalImage.getImageArray();
-
-        for( int x = 0; x <checkImageArray3.length; ++x){
-            for( int y = 0; y < checkImageArray3[0].length; ++y){
-                System.out.print (checkImageArray3[x][y] + " ");
-            }
-            System.out.print ("\n");
-        }
-
-        //testerImg.writeToFilename("NewConvolve.pgm");
-        /*
-        Image convolvedImage = newImage.convolve(newk, bor);
-        int[][] checkImageArray3 = convolvedImage.ImageArray;
-
-        for( int i = 0; i<7; i++){
-            for( int j = 0; j< 24; j++){
-                System.out.print (checkImageArray3[i][j] + " ");
-            }
-            System.out.print ("\n");
-        }
-        convolvedImage.writeToFilename("convolved.pgm");
-         */
-    }
+}
 
 

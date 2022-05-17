@@ -27,13 +27,12 @@ public class KernelFactory {
         return hP;
     }
 
-    //TODO which kernel is that? Where is that from?
+
     /**
      * creates Vertical Prewitt Kernel
      * @return 2d integer array representation of vertical Prewitt Kernel
      */
     public static int[][] createBoringKernel(){
-        //implement
         int[][] bK={{1,1,1},
                 {1, 1, 1},
                 {1, 1, 1}};
@@ -42,7 +41,7 @@ public class KernelFactory {
 
     /**
      * creates box filter Kernel
-     * @return 2d integer array representation of box filter kernel
+     * @return 2d double array representation of box filter kernel
      */
     public static double[][] createBoxFilter(int size){
         assert (size % 2) != 0 : "size has to be uneven";
@@ -81,8 +80,10 @@ public class KernelFactory {
         return bF;
     }
 
-
-    //TODO
+    /**
+     * creates box filter Kernel
+     * @return 2d integer array representation of box filter kernel
+     */
     public static int[][] createINTBoxFilter(int size) {
         assert (size % 2) != 0 : "size has to be uneven";
         assert size >= 3 : "size is 0, has to be 3 or more "; //I changed this expression, used to say size <3
@@ -113,16 +114,5 @@ public class KernelFactory {
                 System.out.println(" " + doubles[j]);
             }
         }
-    }
-
-    //TODO delete main
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-
-        //double[][] a = createBoxFilter(2);
-        double[][] failure = {{}};
-        print2DArray(failure);
-       // print2DArray(createHorizontalPrewittKernel());
-        // print2DArray(createBoxFilter(3));
     }
 }

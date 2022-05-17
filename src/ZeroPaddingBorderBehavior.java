@@ -24,15 +24,4 @@ public class ZeroPaddingBorderBehavior extends BorderBehavior {
         }
         return result;
     }
-
-    //TODO delete main
-    public static void main(String[] args) {
-
-        int[][] ara = {{5,10,14,10,2},
-                    {7,9,12, 0, 5},
-                    {-1,12,2, 0, 4}};
-        System.out.println(ara.length);
-        System.out.println(ara[0].length);
-        System.out.println(new ZeroPaddingBorderBehavior().getPixelValue(2, 5, ara));
-    }
 }
