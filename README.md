@@ -13,15 +13,18 @@ completed exercise two using Python.
 We encountered a problem when we started implementing the "createBoxFilter()" method inside KernelFactory. 
 The given UML clearly states that it should return a two dimensional array of integers, 
 however the boxFilter requires decimal numbers ( f.e. every Element in 3x3 boxFilter has a value of 1/9, 
-which can not appropriately be represented as Integer ). We were therefore left with a choice between 
+which can not appropriately be represented as Integer ). As Java as a static typing language, we were forced to choose between 
+
 </p>
 
 <ol>
 <li>Write createBoxFilter() using Integers and misrepresent its values </li>
-<li>Write createBoxFilter() using doubles and interfere with the UML </li>
+<li>Write createBoxFilter() using doubles and interfere with the UML and many other functionalities using integers instead of doubles.</li>
 </ol>
 
-<p>Finally, we decided to stick with 1 for the sake of not misrepresent its values and harm the UML-stipulations which clearly stated that all relevant methods shall work with integers and not with doubles.</p> 
+<p>Finally, we choose the best of both worlds: We implemented a boxFilter using a double[][] array, just like the UML stated, but implemented another boxFilter, using an int[][] array. The former cannot be used, because, as stated above, many other functionalities rely on integers. The latter can be used, but produces only black pictures, because its values will always be less than one and will therefore be cut to zero, because they are integers.</p> 
+
+<p>In the end, we think that the createBoxFilter functionality does not go along well with Javas static typing. The former tutor was right, assuming that Python with its dynamic typing would be a better candidate for completing this task </p>
 
 <b>Additional testing </b>
 <br><br>

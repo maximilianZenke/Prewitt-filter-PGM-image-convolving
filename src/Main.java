@@ -4,14 +4,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        // TODO javadoc -> DONE
-        // TODO assertions -> DONE
-        // TODO beautify code -> DONE but look over my suggestions
-        // TODO MaxValue ( IMage ) -> DONE ( with max=225 )
-        // TODO ONLY read p2! Exeption handling -> Done but not tested
-        // TODO say why we chose to do kernel with double ... -> discussed but yet to write
-        // TODO you talked about TWO PICS ? Only one example ( wir haben nur abb 6) -> Done
-
         //set up kernels
         int [][] horizontalKernel = KernelFactory.createHorizontalPrewittKernel();
         int [][] verticalKernel = KernelFactory.createVerticalPrewittKernel();
@@ -52,6 +44,29 @@ public class Main {
         bild2ConvolvedB11C.writeToFilename("Clamped/2_11.pgm");
         bild2ConvolvedB27C.writeToFilename("Clamped/2_27.pgm");
 
+        //This is the testing of our workaround for the problem with doubles and integers regarding boxFilters.
+        //Please see Readme.md for further information
+
+        Number[][] NumberBoxKernel3 = KernelFactory.createBoxFilter_Number(3);
+        Number[][] NumberBoxKernel11 = KernelFactory.createBoxFilter_Number(11);
+        Number[][] NumberBoxKernel27 = KernelFactory.createBoxFilter_Number(27);
+
+        Image numberImage = new Image ();
+        numberImage.setImageArray("Pictures/Bild 2.pgm");
+
+        //clamping test
+        Image numberImageConvolved3 = numberImage.convolve_Number(NumberBoxKernel3,clampingBorderBehavior);
+        Image numberImageConvolved11 = numberImage.convolve_Number(NumberBoxKernel11,clampingBorderBehavior);
+        Image numberImageConvolved27 = numberImage.convolve_Number(NumberBoxKernel27,clampingBorderBehavior);
+
+        //zero test
+        Image numberImageConvolvedZeroPadding3 = numberImage.convolve_Number(NumberBoxKernel3,zeroPaddingBorderBehavior);
+
+        numberImageConvolved3.writeToFilename("Clamped/number_workaround_2_5.pgm");
+        numberImageConvolved11.writeToFilename("Clamped/number_workaround_2_11.pgm");
+        numberImageConvolved27.writeToFilename("Clamped/number_workaround_2_27.pgm");
+
+        numberImageConvolvedZeroPadding3.writeToFilename("Clamped/number_workaround_2_5_zeroPadding.pgm");
 
         /*
         int[][] ara = {{10,13,12,7},

@@ -204,8 +204,8 @@ public class Image {
      */
     public static int get_filtered_pixel(int i, int j, int[][] image, int[][] kernel, BorderBehavior behavior) {
 
-        assert (image != null && image.length > 0) : "no image array given";
-        assert (kernel != null && kernel.length > 0) : "no kernel array given";
+        assert (image != null & Objects.requireNonNull(image).length > 0) : "no image array given";
+        assert (kernel != null & Objects.requireNonNull(kernel).length > 0) : "no kernel array given";
         assert (behavior != null) : "no border behavior given";
 
         int kernel_half = ((kernel.length - 1) / 2);
@@ -216,6 +216,38 @@ public class Image {
                 int kernel_factor = kernel[k + kernel_half][l + kernel_half];
                 current_pixel = behavior.getPixelValue(i + k, j + l, image);
                 final_pixel_value += current_pixel * kernel_factor;
+            }
+        }
+        return final_pixel_value;
+    }
+
+    /**
+     * IMPORTANT
+     * This is our workaround for javas static typing restrictions. Please see Readme.md for further information.
+     *
+     * method to get value of pixel if being filtered with given kernel and borderBehaviour.
+     * Essentially a helper function for convolve method.
+     *
+     * @param i        x coordinate in 2d integer array representation of PGM image
+     * @param j        y coordinate in 2d integer array representation of PGM image
+     * @param image    2d Number array representation of PGM image
+     * @param kernel   object used to change image in specified way
+     * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
+     * @return integer value of filtered pixel
+     */
+    public static int get_filtered_pixel_Number(int i, int j, int[][] image, Number[][] kernel, BorderBehavior behavior) {
+
+        assert (image != null & Objects.requireNonNull(image).length > 0) : "no image array given";
+        assert (kernel != null & Objects.requireNonNull(kernel).length > 0) : "no kernel array given";
+        assert (behavior != null) : "no border behavior given";
+        int kernel_half = ((kernel.length - 1) / 2);
+        int final_pixel_value = 0;
+        int current_pixel = 0;
+        for (int k = -kernel_half; k <= kernel_half; k++) {
+            for (int l = -kernel_half; l <= kernel_half; l++) {
+                Number kernel_factor = kernel[k + kernel_half][l + kernel_half];
+                current_pixel = behavior.getPixelValue(i + k, j + l, image);
+                final_pixel_value += current_pixel * kernel_factor.doubleValue() ;
             }
         }
         return final_pixel_value;
@@ -243,6 +275,41 @@ public class Image {
             for (int m = 0; m < ImageArray.length; m++) {
                 for (int n = 0; n < ImageArray[0].length; n++) {
                     int x = get_filtered_pixel(m, n, ImageArray, kernel, behavior);
+                    convolvedImage[m][n] = x;
+                }
+            }
+            finalImage = new Image();
+            finalImage.setImageArray(convolvedImage);
+        } catch (NullPointerException e) {
+            System.out.println("Empty image cannot be convolved");
+            e.printStackTrace();
+        }
+        return finalImage;
+    }
+
+    /**
+     * IMPORTANT
+     * This is our workaround for javas static typing restrictions. Please see Readme.md for further information.
+     *
+     * method to convolve an image with chosen kernel and borderbehavior
+     *
+     * @param kernel   object used to change image in specified way
+     * @param behavior object to specify way of changing image (e.g. border - behaviour of chosen kernel )
+     * @return image object with convolved pixel values.
+     */
+    public Image convolve_Number(Number[][] kernel, BorderBehavior behavior) {
+
+        assert (kernel != null & Objects.requireNonNull(kernel).length > 0) : "no kernel array given";
+        assert (behavior != null) : "no border behavior given";
+        assert (this.ImageArray != null & Objects.requireNonNull(this.ImageArray).length > 0) : "image array is empty";
+        int rows = ImageArray.length;
+        int cols = ImageArray[0].length;
+        int[][] convolvedImage = new int[rows][cols];
+        Image finalImage = null;
+        try {
+            for (int m = 0; m < ImageArray.length; m++) {
+                for (int n = 0; n < ImageArray[0].length; n++) {
+                    int x = get_filtered_pixel_Number(m, n, ImageArray, kernel, behavior);
                     convolvedImage[m][n] = x;
                 }
             }

@@ -60,6 +60,28 @@ public class KernelFactory {
         return bF;
     }
 
+    /**
+     * IMPORTANT
+     * This is our workaround for javas static typing restrictions. Please see Readme.md for further information.
+     *
+     * creates box filter Kernel
+     * @return 2d Numbers array representation of box filter kernel
+     */
+    public static Number[][] createBoxFilter_Number(int size){
+        assert (size % 2) != 0 : "size has to be uneven";
+        assert (size >= 3) : "size is 0, has to be 3 or more ";
+        // new size Array
+        Number[][] bF = new Number[size][size];
+        for(int i=0; i<size; i++ ) {
+            for(int j=0;j<size; j++) {
+                // fill each with value 1 divided by Element Count
+                bF[i][j] = 1.0/(size*size);
+            }
+        }
+        return bF;
+    }
+
+
     //TODO
     public static int[][] createINTBoxFilter(int size) {
         assert (size % 2) != 0 : "size has to be uneven";
