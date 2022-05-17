@@ -23,3 +23,9 @@ which can not appropriately be represented as Integer ). We were therefore left 
 
 <p>Finally, we decided to stick with <b>......TODO......</b></p> 
 
+<ul>
+<b>TO DO!</b>
+<li>talk about imageArray attr in Image class</li>
+
+
+</ul>

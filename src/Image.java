@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Objects;
 import java.util.Scanner;
 
 /***
@@ -229,9 +230,9 @@ public class Image {
      */
     public Image convolve(int[][] kernel, BorderBehavior behavior) {
 
-        assert (kernel != null && kernel.length > 0) : "no kernel array given";
+        assert (kernel != null & Objects.requireNonNull(kernel).length > 0) : "no kernel array given";
         assert (behavior != null) : "no border behavior given";
-        assert (this.ImageArray != null) : "image array is empty";
+        assert (this.ImageArray != null & Objects.requireNonNull(this.ImageArray).length > 0) : "image array is empty";
 
         int rows = ImageArray.length;
         int cols = ImageArray[0].length;
@@ -329,8 +330,6 @@ public class Image {
         }
         convolvedImage.writeToFilename("convolved.pgm");
          */
-
-
     }
 
 

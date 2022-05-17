@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  * specification of abstract class borderBehavior realizing clamping as border behavior
  */
@@ -11,37 +14,39 @@ public class ClampingBorderBehavior extends BorderBehavior {
      * @param image 2d integer array representation of PGM image
      * @return int value of pixel
      */
-
+    @Override
     public int getPixelValue(int i, int j, int[][] image) {
 
-        assert( image != null && image.length > 0): "image array is empty";
+        assert( image != null & Objects.requireNonNull(image).length > 0): "image array is empty";
+
 
         int width_i = image[0].length-1;
         int height_i = image.length-1;
 
-        //TODO this might be a better way to go
-        /*
-        if( (i<0) || (j<0) ){
-            i = 0;
-            j = 0;
-         }
-         ...
-         */
 
+        /*
+        Several if Statements improve Stability compared to + and -1 for new border Values
+        Especially if Negative Values greater than -1 or very Large filters should be Applied.
+        */
         if (i < 0) {
             i = 0;
-            }
-        if (i > height_i){
-            i = height_i;
         }
+
         if (j < 0) {
             j = 0;
         }
+
+        if (i > height_i){
+            i = height_i;
+        }
+
         if (j>width_i){
             j = width_i;
         }
+
         return image[i][j];
     }
+
 
     //TODO delete main
     public static void main(String[] args) {
@@ -49,10 +54,10 @@ public class ClampingBorderBehavior extends BorderBehavior {
         int[][] ara = {{5,10,14,10,2},
                         {7,9,12, 0, 5},
                         {-1,12,2, 0, 4}};
-        System.out.println(ara[0][ara[0].length-1]);
-        System.out.println(new ClampingBorderBehavior().getPixelValue(3, 2, ara));
+        //System.out.println(ara[0][ara[0].length-1]);
+        //System.out.println(new ClampingBorderBehavior().getPixelValue(3, 2, ara));
 
-        int[][] failure = {{}};
+        int[][] failure = new int[0][];
         new ClampingBorderBehavior().getPixelValue(1,1,failure);
     }
 }
