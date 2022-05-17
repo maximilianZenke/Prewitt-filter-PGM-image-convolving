@@ -15,7 +15,7 @@ The given UML clearly states that it should return a two dimensional array of in
 however the boxFilter requires decimal numbers ( f.e. every Element in 3x3 boxFilter has a value of 1/9, 
 which can not appropriately be represented as Integer ). We were therefore left with a choice between 
 </p>
-<br> 
+
 <ol>
 <li>Write createBoxFilter() using Integers and misrepresent its values </li>
 <li>Write createBoxFilter() using doubles and interfere with the UML </li>
@@ -23,9 +23,12 @@ which can not appropriately be represented as Integer ). We were therefore left 
 
 <p>Finally, we decided to stick with <b>......TODO......</b></p> 
 
-<ul>
-<b>TO DO!</b>
-<li>talk about imageArray attr in Image class</li>
+<b>Additional testing </b>
+<br><br>
+After completing all the test stated in the final exercise via setting up the Main class, we felt the urge to further test our algorithms. The paperwork only included one example we could use to check if our program worked accordingly ( by manually comparing pixels ). 
+Therefore we searched the web for appropriate examples and found a nice tutorial for using the Prewitt filter ( https://www.tutorialspoint.com/dip/prewitt_operator.htm ). The tutorial included a reference picture which was being convolved two times, once via a horizontal kernel and once via a vertical kernel. We decided that we could test our convolve algirithm by downloading the reference picture and then convolving it just like the tutorial stated. If our outcome would match theirs, we would be right to assume that our algorithm works as intended. <br>
 
+To implement this test, we created an additional environment in shape of a folder "TestingPictures", containing the reference picture and its two convolved surrogates and a "Testing" class in our source folder to hold the necessary commands to convolve said reference picture. <br> 
+After completing our test we opened the two outcome pictures in GIMP and compared them to the outcome pictures on the website. Fortunately they matched. We therefore assume, that our algorithm works as intended. <br>
 
-</ul>
+*If you want to assure that our testing lead to the described results, we recommend you re-run the main in the Testing class and then compare the output stored in the TestingPictures-folder with the corresponding images on the website stated above.*
