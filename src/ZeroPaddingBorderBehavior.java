@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * specification of abstract class borderBehavior realizing zero padding as border behavior
  */
@@ -14,8 +16,9 @@ public class ZeroPaddingBorderBehavior extends BorderBehavior {
     @Override
     public int getPixelValue(int i, int j, int [][] image) {
 
-        assert( image != null && image.length > 0): "image array is empty";
+        assert( image != null & Objects.requireNonNull(image).length > 0): "image array is empty";
 
+        //TODO write why we do that @Marcel
         if (i > image.length-1 || i < 0){
             return 0;
         }
@@ -24,24 +27,6 @@ public class ZeroPaddingBorderBehavior extends BorderBehavior {
         }
         else return image[i][j];
     }
-
-    //TODO fix multiple return statements
-    //possible fix for multiple return statements but not tested yet:
-    /*
-    @Override
-    public int getPixelValue(int i, int j, int [][] image) {
-
-        int tmpImage = image[i][j];
-
-        if (i > image.length-1 || i < 0){
-            tmpImage = 0;
-        }
-        else if(j > image[0].length-1 || j < 0){
-             tmpImage = 0;
-        }
-        else return tmpImage;
-    }
-     */
 
     //TODO delete main
     public static void main(String[] args) {
