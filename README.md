@@ -21,7 +21,7 @@ which can not appropriately be represented as Integer ). We were therefore left 
 <li>Write createBoxFilter() using doubles and interfere with the UML </li>
 </ol>
 
-<p>Finally, we decided to stick with <b>......TODO......</b></p> 
+<p>Finally, we decided to stick with 1 for the sake of not misrepresent its values and harm the UML-stipulations which clearly stated that all relevant methods shall work with integers and not with doubles.</p> 
 
 <b>Additional testing </b>
 <br><br>
@@ -31,4 +31,4 @@ Therefore we searched the web for appropriate examples and found a nice tutorial
 To implement this test, we created an additional environment in shape of a folder "TestingPictures", containing the reference picture and its two convolved surrogates and a "Testing" class in our source folder to hold the necessary commands to convolve said reference picture. <br> 
 After completing our test we opened the two outcome pictures in GIMP and compared them to the outcome pictures on the website. Fortunately they matched. We therefore assume, that our algorithm works as intended. <br>
 
-*If you want to assure that our testing lead to the described results, we recommend you re-run the main in the Testing class and then compare the output stored in the TestingPictures-folder with the corresponding images on the website stated above.*
+*If you want to assure that our testing lead to the described results, we recommend you re-run the main in the Testing class, open the output stored in the TestingPictures-folder with GIMP and compare it with the corresponding images on the website stated above.*
