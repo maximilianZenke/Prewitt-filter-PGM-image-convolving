@@ -20,8 +20,6 @@ public class Main {
         int [][] boxKernel11 = KernelFactory.createINTBoxFilter(11);
         int [][] boxKernel27 = KernelFactory.createINTBoxFilter(27);
 
-
-
         //set up border behaviours
         BorderBehavior clampingBorderBehavior = new ClampingBorderBehavior();
         BorderBehavior zeroPaddingBorderBehavior = new ZeroPaddingBorderBehavior();
@@ -33,13 +31,15 @@ public class Main {
         bild2.setImageArray("src/Bild 2.pgm");
 
         //colvolve bild 1
+        //TODO wieso anders Ergebnis?
         Image bild1ConvolvedHC = bild1.convolve(horizontalKernel,clampingBorderBehavior);
         Image bild1ColvolcedVC = bild1.convolve(verticalKernel, clampingBorderBehavior);
         Image bild1ColvolcedHZ = bild1.convolve(horizontalKernel, zeroPaddingBorderBehavior);
         Image bild1ColvolcedVZ = bild1.convolve(verticalKernel, zeroPaddingBorderBehavior);
 
         Image bild2ConvolvedB3C = bild2.convolve(boxKernel3,clampingBorderBehavior);
-
+        Image bild2ConvolvedB11C = bild2.convolve(boxKernel11, clampingBorderBehavior);
+        Image bild2ConvolvedB27C = bild2.convolve(boxKernel27, clampingBorderBehavior);
 
         //write bild 1 convolved to file
         bild1ConvolvedHC.writeToFilename("Clamped/1_horizontal.pgm");
@@ -48,9 +48,9 @@ public class Main {
         bild1ColvolcedVZ.writeToFilename("ZeroPadded/1_vertical.pgm");
 
         //wirte bild 2 colvolved to file
-        bild2ConvolvedB3C.writeToFilename("Clamped/2_3.pgm");
-
-
+        bild2ConvolvedB3C.writeToFilename("Clamped/2_5.pgm");
+        bild2ConvolvedB11C.writeToFilename("Clamped/2_11.pgm");
+        bild2ConvolvedB27C.writeToFilename("Clamped/2_27.pgm");
 
 
         /*
