@@ -1,5 +1,6 @@
 <h1>Readme</h1> <br>
 <h2>Software artifact for course "Informatik 3" at Reutlingen University</h2>
+<h3>https://www.inf.reutlingen-university.de/home/</h3>
 
 <p>
 I chose to complete exercise three using java because java does well in file 
